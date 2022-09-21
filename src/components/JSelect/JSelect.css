@@ -1,18 +1,22 @@
 .jselect {
     background-color: aqua;
     width: inherit;
-    height: inherit;
-    border-radius: 40px;
     overflow: hidden;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
+    align-items: flex-start;
     box-sizing: border-box;
     padding: 0px 10px;
     border: 0;
     cursor: pointer;
 }
 
-.jselect__option {
-    appearance: none
+.jselect:hover {
+    background-color: red;
+}
+
+.jselect__current {
+    display: flex;
+    align-items: center;
 }

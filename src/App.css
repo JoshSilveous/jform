@@ -7,4 +7,8 @@
     background-color: #f0da9e;
     width: 200px;
     height: 40px;
+    --background: #ff5d3a;
+    --background-light: #ffaf9e;
+    --text: #590dff;
+    --text-light: #9667fc;
 }
