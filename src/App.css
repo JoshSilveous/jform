@@ -11,4 +11,28 @@
     --background-light: #ffaf9e;
     --text: #590dff;
     --text-light: #9667fc;
+    color: white;
+}
+
+.JSelectContainer-2 {
+    background-color: #f0da9e;
+    font-size: 27px;
+    width: 200px;
+    height: 70px;
+    --background: #ff5d3a;
+    --background-light: #ffaf9e;
+    --text: #590dff;
+    --text-light: #9667fc;
+    color: white;
+}
+
+.JSelectContainer-3 {
+    background-color: #f0da9e;
+    width: 200px;
+    height: 90px;
+    --background: #ff5d3a;
+    --background-light: #ffaf9e;
+    --text: #590dff;
+    --text-light: #9667fc;
+    color: white;
 }

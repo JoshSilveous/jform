@@ -1,5 +1,5 @@
 .jselect {
-    background-color: aqua;
+    text-align: left;
     width: inherit;
     overflow: hidden;
     display: flex;
@@ -7,16 +7,56 @@
     justify-content: flex-start;
     align-items: flex-start;
     box-sizing: border-box;
-    padding: 0px 10px;
+    padding: 0px 20px;
+    border-radius: 20px;
     border: 0;
     cursor: pointer;
-}
-
-.jselect:hover {
-    background-color: red;
+    color: inherit;
+    font-size: inherit;
+    font-weight: 700;
+    overflow: hidden;
+    z-index: 50;
+    position: fixed;
 }
 
 .jselect__current {
     display: flex;
     align-items: center;
+    flex-shrink: 0;
+}
+
+.jselect__valuesitem {
+    width: inherit;
+    transition: filter 0.2s ease;
+    padding: 5px 0px;
+}
+
+.jselect__valuesitem:hover{
+    filter: brightness(10%);
+}
+
+.jselect__divider {
+    margin-bottom: 3px;
+    box-sizing: border-box;
+    height: 1px;
+    background-color: currentColor;
+    width: 100%;
+    flex-shrink: 0;
+}
+
+.jselect__backgroundDiv {
+    background-color: rgba(255,255,255,.0);
+    height:100%;
+    width: inherit;
+    z-index: 1;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    border-radius: 20px;
+    transition: background-color 0.2s ease;
+    pointer-events: auto;
+}
+
+.jselect__backgroundDiv:hover {
+    background-color: rgba(255,255,255,.5);
 }
