@@ -1,4 +1,4 @@
-Need to calculate div height in JS for CSS smooth animations.
+
 
 Page scales very weird when zooming in.
 

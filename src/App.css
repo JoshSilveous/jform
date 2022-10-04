@@ -1,10 +1,13 @@
 .App {
     display: flex;
     gap: 20px;
+    background-color: rgb(104, 164, 216);
+    height: 100vh;
 }
 
 .JSelectContainer-1 {
     background-color: #f0da9e;
+    box-sizing:inherit;
     width: 200px;
     height: 40px;
     --background: #ff5d3a;

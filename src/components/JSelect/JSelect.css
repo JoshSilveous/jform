@@ -23,15 +23,18 @@
     display: flex;
     align-items: center;
     flex-shrink: 0;
+    z-index: 2;
 }
 
 .jselect__valuesitem {
     width: inherit;
     transition: filter 0.2s ease;
     padding: 5px 0px;
+    z-index: 2;
+    pointer-events: auto;
 }
 
-.jselect__valuesitem:hover{
+.jselect__valuesitem:hover {
     filter: brightness(10%);
 }
 
@@ -42,21 +45,22 @@
     background-color: currentColor;
     width: 100%;
     flex-shrink: 0;
+    z-index: 2;
 }
 
-.jselect__backgroundDiv {
-    background-color: rgba(255,255,255,.0);
-    height:100%;
+.jselect__hoveroverlay {
+    opacity: 0%;
+    height: 100%;
     width: inherit;
     z-index: 1;
     position: absolute;
     top: 0px;
     left: 0px;
     border-radius: 20px;
-    transition: background-color 0.2s ease;
+    transition: opacity 0.2s ease;
     pointer-events: auto;
 }
 
-.jselect__backgroundDiv:hover {
-    background-color: rgba(255,255,255,.5);
+.jselect__hoveroverlay:hover {
+    opacity: 100%
 }
