@@ -1,7 +1,14 @@
+.jselect-default {
+    background-color: #f0da9e;
+    box-sizing: inherit;
+    width: 200px;
+    height: 40px;
+    color: white;
+}
+
 .jselect {
     text-align: left;
     width: inherit;
-    overflow: hidden;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -17,6 +24,7 @@
     overflow: hidden;
     z-index: 50;
     position: fixed;
+    max-height: 100vh;
 }
 
 .jselect__current {
@@ -24,19 +32,17 @@
     align-items: center;
     flex-shrink: 0;
     z-index: 2;
+    width: 100%;
 }
 
 .jselect__valuesitem {
-    width: inherit;
-    transition: filter 0.2s ease;
+    width: 100%;
+    transition: color 0.2s ease;
     padding: 5px 0px;
     z-index: 2;
     pointer-events: auto;
 }
 
-.jselect__valuesitem:hover {
-    filter: brightness(10%);
-}
 
 .jselect__divider {
     margin-bottom: 3px;
@@ -51,6 +57,7 @@
 .jselect__hoveroverlay {
     opacity: 0%;
     height: 100%;
+    position: fixed;
     width: inherit;
     z-index: 1;
     position: absolute;
@@ -63,4 +70,8 @@
 
 .jselect__hoveroverlay:hover {
     opacity: 100%
+}
+
+.jselect__options {
+    overflow-y: auto;
 }

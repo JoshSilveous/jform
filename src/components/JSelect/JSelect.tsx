@@ -1,56 +1,45 @@
-import React, { useState, useRef, useLayoutEffect } from 'react'
+import { getEventListeners } from 'events';
+import React, { useState, useRef, useLayoutEffect, useEffect } from 'react'
 import './JSelect.css'
 
 export interface JSelectProps {
-    values: string[] | number[];
-    defaultValueIndex: number;
-    backgroundColor: string;
+    options: string[] | number[];
+    defaultValueIndex?: number;
+    backgroundColor?: string;
     backgroundColorHover?: string;
+    textColor?: string;
+    textColorHover?: string;
     className?: string | undefined;
     style?: React.CSSProperties | undefined;
 }
 
 function JSelect({
-    values,
-    defaultValueIndex,
-    backgroundColor,
+    options,
+    defaultValueIndex = 0,
+    backgroundColor = '#3bd6a0',
     backgroundColorHover = 'rgba(255,255,255,.5)',
-    className,
+    textColor = '#171448',
+    textColorHover = '#aaa7e7',
+    className = "jselect-default",
     style
 }: JSelectProps) {
 
-    // Data states
     const [current, setCurrent] = useState(defaultValueIndex)
 
-    // Visual states
-    const [dropdownOpen, setDropdownOpen] = useState(false)
-    const [isHovering, setIsHovering] = useState(false)
-    const [hoverOverValues, setHoverOverValues] = useState<boolean[]>([])
+    const [dropdownIsHovering, setDropdownIsHovering] = useState(false)
 
-    // Calculate height values
+    // Dropdown Size & Action
     const jselectRef = useRef<HTMLButtonElement>(null)
-    let [defaultClosedHeight, setDefaultClosedHeight] = useState<number>(0)
-    let [defaultOpenedHeight, setDefaultOpenedHeight] = useState<number>(0)
+    const [dropdownOpen, setDropdownOpen] = useState(false)
+    const [defaultClosedHeight, setDefaultClosedHeight] = useState<number>(0)
+    const [defaultOpenedHeight, setDefaultOpenedHeight] = useState<number>(0)
+
     useLayoutEffect(() => {
         if (jselectRef.current !== null) {
             setDefaultClosedHeight(jselectRef.current.clientHeight!)
             setDefaultOpenedHeight(jselectRef.current.scrollHeight + jselectRef.current.offsetHeight)
         }
     }, [])
-
-    // Visual Objects
-    const valuesDisplay = values.map((item, index, array) => {
-        return (
-            <div className="jselect__valuesitem"
-                style={{
-                    paddingBottom: index + 1 === array.length ? '15px' : '2'
-                }}
-            >
-                {item}
-            </div>
-        )
-    })
-
 
     function getButtonHeight() {
         // Prevents slide-down animation due to pageload defaultHeight being 0
@@ -66,24 +55,65 @@ function JSelect({
     }
 
 
+    // Options
+    const optionsDisplay = options.map((item, index, array) => {
+        return (
+            <div className="jselect__valuesitem"
+                key={index}
+                style={{
+                    paddingBottom: index + 1 === array.length ? '15px' : '2',
+                    color: textColor
 
-    function lightenDivOnHover() {
+                }}
+                onMouseEnter={optionIsHovered}
+                onMouseLeave={optionIsNotHovered}
+            >
+                {item}
+            </div>
+        )
+    })
 
+    const jselect__hoveroverlayStyle: React.CSSProperties = {
+        backgroundColor: backgroundColorHover,
+        opacity: dropdownIsHovering ? '100%' : '0%'
     }
+
+    function optionIsHovered(e: any) {
+        e.currentTarget.style.color = textColorHover
+    }
+
+    function optionIsNotHovered(e: any) {
+        e.currentTarget.style.color = textColor
+    }
+
 
     const jselectStyle: React.CSSProperties = {
         backgroundColor: backgroundColor,
         height: getButtonHeight(),
-        // borderRadius: defaultHeight * 0.5,
-        transition: defaultClosedHeight === 0 ? '' : 'background-color 0.2s ease, height 0.4s ease, filter 0.2s ease'
+        transition: defaultClosedHeight === 0 ? '' : 'background-color 0.2s ease, height 0.4s ease, filter 0.2s ease',
+        zIndex: dropdownOpen ? '300' : ''
     }
 
-    const jselect__hoveroverlayStyle: React.CSSProperties = {
-        backgroundColor: backgroundColorHover,
-        opacity: isHovering ? '100%' : '0%'
-    }
+    useEffect(() => {
+        const test = () => {
+            console.log('Window click detected!')
+        }
 
-    function hoveringOverThis()
+        if (dropdownOpen) {
+            window.addEventListener('click', test, true)
+            console.log('dropdownOpen is', dropdownOpen)
+        }
+        return () => {
+            window.removeEventListener('click', test, true)
+            console.log('dropdownOpen is', dropdownOpen)
+        }
+
+    })
+
+
+
+
+
 
     return (
         <div className={className} style={style}>
@@ -92,26 +122,22 @@ function JSelect({
                 onClick={() => { setDropdownOpen(prev => !prev) }}
                 ref={jselectRef}
                 style={jselectStyle}
-                onMouseEnter={() => setIsHovering(true)}
-                onMouseLeave={() => setIsHovering(false)}
+                onMouseEnter={() => setDropdownIsHovering(true)}
+                onMouseLeave={() => setDropdownIsHovering(false)}
             >
 
                 <div className="jselect__current" style={{
-                    height: defaultClosedHeight
+                    height: defaultClosedHeight,
+                    color: textColor
                 }}>
-                    {values[current]}
+                    {options[current]}
                 </div>
                 <div className="jselect__divider" />
-                {valuesDisplay}
+                {optionsDisplay}
 
                 <div className="jselect__hoveroverlay" style={jselect__hoveroverlayStyle}>
                 </div>
             </button>
-
-
-
-
-
         </div>
     )
 }

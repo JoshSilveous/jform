@@ -2,5 +2,9 @@
 
 Page scales very weird when zooming in.
 
-Get hover effects working right
-    - overlay can't select values. If overlay is moved behind text, hovering over text removed hover effect.
+
+Make Z-Index increase when hovering over a dropdown to prevent illogical overlaps
+OR
+Make the menu close when clicked outside of
+
+Program actual values
