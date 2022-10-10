@@ -3,7 +3,6 @@ import './App.css';
 import { JSelect } from './components';
 
 function App() {
-
     return (
         <div className="App">
             <div className="App_Line">

@@ -16,10 +16,10 @@ export interface JSelectProps {
 function JSelect({
     options,
     defaultValueIndex = 0,
-    backgroundColor = '#3bd6a0',
-    backgroundColorHover = 'rgba(255,255,255,.5)',
-    textColor = '#171448',
-    textColorHover = '#aaa7e7',
+    backgroundColor = 'hsla(159, 65%, 54%, 1)',
+    backgroundColorHover = 'hsla(159, 65%, 74%, 1)',
+    textColor = 'hsla(243, 57%, 18%, 1)',
+    textColorHover = 'hsla(243, 57%, 78%, 1)',
     className = "jselect-default",
     style
 }: JSelectProps) {
@@ -32,14 +32,13 @@ function JSelect({
     const jselectRef = useRef<HTMLButtonElement>(null)
     const [dropdownOpen, setDropdownOpen] = useState(false)
     const [defaultClosedHeight, setDefaultClosedHeight] = useState<number>(0)
-    const [defaultOpenedHeight, setDefaultOpenedHeight] = useState<number>(0)
 
     useLayoutEffect(() => {
         if (jselectRef.current !== null) {
             setDefaultClosedHeight(jselectRef.current.clientHeight!)
-            setDefaultOpenedHeight(jselectRef.current.scrollHeight + jselectRef.current.offsetHeight)
         }
     }, [])
+
 
     function getButtonHeight() {
         // Prevents slide-down animation due to pageload defaultHeight being 0
@@ -47,7 +46,7 @@ function JSelect({
             return 'inherit'
         } else {
             if (dropdownOpen) {
-                return defaultOpenedHeight
+                return window.innerHeight - (jselectRef.current?.offsetTop!)
             } else {
                 return defaultClosedHeight
             }
@@ -86,34 +85,21 @@ function JSelect({
         e.currentTarget.style.color = textColor
     }
 
-
-    const jselectStyle: React.CSSProperties = {
-        backgroundColor: backgroundColor,
-        height: getButtonHeight(),
-        transition: defaultClosedHeight === 0 ? '' : 'background-color 0.2s ease, height 0.4s ease, filter 0.2s ease',
-        zIndex: dropdownOpen ? '300' : ''
+    const jselectStyleZIndex = () => {
+        if (dropdownIsHovering) { return '2' }
+        if (dropdownOpen) { return '1' }
+        if (!dropdownOpen) {
+            setTimeout(() => { return 0 }, 200)
+        }
     }
 
-    useEffect(() => {
-        const test = () => {
-            console.log('Window click detected!')
-        }
-
-        if (dropdownOpen) {
-            window.addEventListener('click', test, true)
-            console.log('dropdownOpen is', dropdownOpen)
-        }
-        return () => {
-            window.removeEventListener('click', test, true)
-            console.log('dropdownOpen is', dropdownOpen)
-        }
-
-    })
-
-
-
-
-
+    const jselectStyle: React.CSSProperties = {
+        backgroundColor: dropdownIsHovering ? backgroundColorHover : backgroundColor,
+        height: getButtonHeight(),
+        transition: defaultClosedHeight === 0 ? '' : 'background-color 0.2s ease, height 0.4s ease, filter 0.2s ease',
+        zIndex: jselectStyleZIndex()
+    }
+    // console.dir(jselectRef.current)
 
     return (
         <div className={className} style={style}>
@@ -125,7 +111,6 @@ function JSelect({
                 onMouseEnter={() => setDropdownIsHovering(true)}
                 onMouseLeave={() => setDropdownIsHovering(false)}
             >
-
                 <div className="jselect__current" style={{
                     height: defaultClosedHeight,
                     color: textColor
@@ -133,10 +118,10 @@ function JSelect({
                     {options[current]}
                 </div>
                 <div className="jselect__divider" />
-                {optionsDisplay}
-
-                <div className="jselect__hoveroverlay" style={jselect__hoveroverlayStyle}>
+                <div className="jselect__options">
+                    {optionsDisplay}
                 </div>
+
             </button>
         </div>
     )

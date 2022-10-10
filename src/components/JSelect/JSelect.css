@@ -22,8 +22,8 @@
     font-size: inherit;
     font-weight: 700;
     overflow: hidden;
-    z-index: 50;
-    position: fixed;
+    z-index: 2;
+    position: relative;
     max-height: 100vh;
 }
 
@@ -31,7 +31,7 @@
     display: flex;
     align-items: center;
     flex-shrink: 0;
-    z-index: 2;
+    z-index: 1;
     width: 100%;
 }
 
@@ -39,7 +39,7 @@
     width: 100%;
     transition: color 0.2s ease;
     padding: 5px 0px;
-    z-index: 2;
+    z-index: 1;
     pointer-events: auto;
 }
 
@@ -51,27 +51,12 @@
     background-color: currentColor;
     width: 100%;
     flex-shrink: 0;
-    z-index: 2;
-}
-
-.jselect__hoveroverlay {
-    opacity: 0%;
-    height: 100%;
-    position: fixed;
-    width: inherit;
     z-index: 1;
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    border-radius: 20px;
-    transition: opacity 0.2s ease;
-    pointer-events: auto;
-}
-
-.jselect__hoveroverlay:hover {
-    opacity: 100%
 }
 
 .jselect__options {
     overflow-y: auto;
+    flex-shrink: 0;
+    width: 100%;
+    max-height: 100%;
 }
