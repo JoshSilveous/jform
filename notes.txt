@@ -1,7 +1,5 @@
 
 
-Page scales very weird when zooming in.
-
 
 Make Z-Index increase when hovering over a dropdown to prevent illogical overlaps
 OR
